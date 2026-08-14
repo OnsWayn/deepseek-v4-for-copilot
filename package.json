@@ -127,6 +127,11 @@
           "minimum": 0,
           "description": "%deepseek-copilot.config.maxTokens.description%"
         },
+        "deepseek-copilot.webSearch": {
+          "type": "boolean",
+          "default": true,
+          "description": "%deepseek-copilot.config.webSearch.description%"
+        },
         "deepseek-copilot.experimental.stabilizeToolList": {
           "type": "boolean",
           "default": false,

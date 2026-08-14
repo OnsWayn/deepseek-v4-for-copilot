@@ -65,10 +65,13 @@ export async function createHttpError(
 	const { baseUrl } = context;
 	const responseText = await response.text();
 	const serverMessage = extractServerMessage(responseText);
-	const userSummary = getHttpErrorMessage(
+	let userSummary = getHttpErrorMessage(
 		response.status,
 		getCreateApiKeyUrl(response.status, baseUrl),
 	);
+	if (serverMessage) {
+		userSummary = `${userSummary} (${serverMessage})`;
+	}
 
 	return new DeepSeekRequestError({
 		message: `DeepSeek API request failed with HTTP ${response.status}`,

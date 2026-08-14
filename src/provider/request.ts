@@ -1,7 +1,7 @@
 import vscode from 'vscode';
 import { AuthManager } from '../auth';
 import { DeepSeekClient } from '../client';
-import { getApiModelId, getBaseUrl, getMaxTokens } from '../config';
+import { getApiModelId, getBaseUrl, getMaxTokens, getWebSearchEnabled } from '../config';
 import { MODELS } from '../consts';
 import { isOfficialDeepSeekBaseUrl } from '../endpoint';
 import { t } from '../i18n';
@@ -67,6 +67,7 @@ export async function prepareChatRequest({
 	const thinkingCapability = modelDef?.capabilities.thinking;
 	const isThinkingModel = Boolean(thinkingCapability);
 	const maxTokens = getMaxTokens();
+	const webSearchEnabled = getWebSearchEnabled();
 
 	const visionResolution = await resolveImageMessages(messages, token, getVisionDescriber);
 	const resolvedMessages = visionResolution.messages;
@@ -81,6 +82,7 @@ export async function prepareChatRequest({
 		tools,
 		tool_choice: tools && tools.length > 0 ? ('auto' as const) : undefined,
 		max_tokens: maxTokens,
+		webSearch: webSearchEnabled,
 	};
 	const requestKind = classifyDeepSeekRequest({
 		request: baseRequest,

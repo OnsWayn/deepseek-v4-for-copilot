@@ -47,6 +47,9 @@ DeepSeek V4 是纯文本模型。将截图拖入聊天，本扩展会自动将�
 ### 思考模式与推理深度控制
 完整支持 DeepSeek V4 的 `reasoning_content`。DeepSeek V4 Flash 和 Pro 均可选择 `停用`、`轻量`、`标准`（均衡，默认）或 `深度`（适用于复杂 Agent 任务），与官方 API 已实现的推理档位保持一致。
 
+### 原生联网搜索（Responses API）
+原生支持通过 DeepSeek Responses API（`/responses`）进行服务端联网检索。开启后，模型可在需要时自主触发实时网络搜索并引用来源信息，在 Copilot 思考流中实时展示检索状态（`🔍 [联网搜索] 正在检索...`）。若当前配置的端点或第三方中转不支持 Responses API，会自动平滑回退到标准 `/chat/completions` 接口。
+
 ### 继承全部 Copilot 能力
 由于本扩展接入的是 Copilot 的原生 provider API，你免费获得完整能力栈：
 - **Agent 模式**——自主执行多步骤任务
@@ -101,6 +104,7 @@ API Key 存储在 VS Code 的 `SecretStorage` 中（macOS 钥匙串 / Windows �
 |---|---|---|
 | `deepseek-copilot.baseUrl` | `https://api.deepseek.com` | API 端点——可改为自托管或代理部署地址 |
 | `deepseek-copilot.maxTokens` | `0` | 最大输出 Token 数（`0` = 不限制）。可用于成本控制 |
+| `deepseek-copilot.webSearch` | `true` | 开启 DeepSeek Responses API（`/responses`）原生服务端联网搜索功能（带自动回退） |
 | `deepseek-copilot.modelIdOverrides` | 预填官方 ID 映射 | DeepSeek V4 Flash / Pro 对应的 API 模型 ID。仅在使用模型名不同的兼容第三方 API 时修改 |
 | `deepseek-copilot.debugMode` | `minimal` | 诊断模式：`minimal` 仅上报 token 用量，`metadata` 输出隐私安全日志，`verbose` 将完整请求 dump 和 pipeline snapshot 写入扩展 global storage。完整 dump 可能包含敏感提示词文本、工具定义、文件片段和图片描述。使用 `DeepSeek: 打开请求 Dump 目录` 打开 dump 位置 |
 | `deepseek-copilot.visionModel` | *(自动)* | 用作图片代理的 VS Code 视觉模型。请通过 `DeepSeek: 配置视觉代理` 设置；新版保存为 `vendor/id`，旧版裸模型 ID 仍兼容读取 |

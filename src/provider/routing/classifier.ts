@@ -143,7 +143,7 @@ function startsWithAny(text: string, prefixes: readonly string[]): boolean {
 }
 
 function getDeepSeekToolName(tool: DeepSeekTool): string {
-	return tool.function.name;
+	return tool.type === 'function' ? tool.function.name : tool.type;
 }
 
 function getFirstVscodeText(messages: readonly vscode.LanguageModelChatRequestMessage[]): string {

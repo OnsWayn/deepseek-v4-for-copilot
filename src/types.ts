@@ -24,14 +24,18 @@ export interface DeepSeekToolCall {
 	};
 }
 
-export interface DeepSeekTool {
-	type: 'function';
-	function: {
-		name: string;
-		description?: string;
-		parameters?: Record<string, unknown>;
-	};
-}
+export type DeepSeekTool =
+	| {
+			type: 'function';
+			function: {
+				name: string;
+				description?: string;
+				parameters?: Record<string, unknown>;
+			};
+	  }
+	| {
+			type: 'web_search';
+	  };
 
 export interface DeepSeekUsage {
 	prompt_tokens: number;
@@ -52,6 +56,7 @@ export interface DeepSeekRequest {
 	tool_choice?: 'none' | 'auto' | 'required';
 	thinking?: { type: 'enabled' | 'disabled' };
 	reasoning_effort?: ReasoningEffort;
+	webSearch?: boolean;
 	stream_options?: {
 		include_usage: boolean;
 	};

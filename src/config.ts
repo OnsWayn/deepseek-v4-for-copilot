@@ -37,6 +37,14 @@ export function getMaxTokens(): number | undefined {
 }
 
 /**
+ * Whether DeepSeek server-side web search via Responses API is enabled.
+ */
+export function getWebSearchEnabled(): boolean {
+	const config = vscode.workspace.getConfiguration(CONFIG_SECTION);
+	return config.get<boolean>('webSearch', true);
+}
+
+/**
  * Diagnostic mode. `verbose` also enables metadata logs.
  *
  * The legacy boolean `debug` setting is still read as a fallback so old

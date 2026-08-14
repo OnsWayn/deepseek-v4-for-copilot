@@ -47,6 +47,9 @@ This proxy is a compatibility bridge; if DeepSeek native vision becomes availabl
 ### Thinking Mode with Reasoning Effort Control
 Full support for DeepSeek V4's `reasoning_content`. DeepSeek V4 Flash and Pro both offer `none` (off), `low` (light reasoning), `high` (balanced, default), and `max` (deep reasoning for hard agent tasks), matching the effort levels implemented by the official API.
 
+### Web Search via Responses API
+Native support for DeepSeek server-side web search using the Responses API (`/responses`). When enabled, the model can automatically perform web searches to retrieve and cite up-to-date real-time information, streaming search progress (`🔍 Searching...`) directly into Copilot Chat's reasoning stream. Automatically falls back to standard `/chat/completions` if the endpoint does not implement the Responses API.
+
 ### Inherits Every Copilot Capability
 Because this plugs into Copilot's native provider API, you get the full stack for free:
 - **Agent mode** — autonomous multi-step tasks
@@ -101,6 +104,7 @@ Both support optional thinking mode, tool calling, and 1M token context.
 |---|---|---|
 | `deepseek-copilot.baseUrl` | `https://api.deepseek.com` | API endpoint — change for self-hosted / proxied deployments |
 | `deepseek-copilot.maxTokens` | `0` | Max output tokens (`0` = no limit). Useful for cost control |
+| `deepseek-copilot.webSearch` | `true` | Enable DeepSeek server-side web search via the Responses API (`/responses`) with automatic fallback |
 | `deepseek-copilot.modelIdOverrides` | prefilled official ID map | API model IDs to send for DeepSeek V4 Flash / Pro. Change only for compatible third-party APIs with different model names |
 | `deepseek-copilot.debugMode` | `minimal` | Diagnostic mode: `minimal` for token usage only, `metadata` for privacy-preserving logs, or `verbose` for full request dumps and pipeline snapshots under extension global storage. Full dumps may include sensitive prompt text, tool schemas, file snippets, and image descriptions. Use `DeepSeek: Open Request Dumps Folder` to open the dump location |
 | `deepseek-copilot.visionModel` | *(auto)* | VS Code vision model used to proxy images. Configure from `DeepSeek: Configure Vision Proxy`; new saves use `vendor/id`, while legacy bare model IDs are still read |
